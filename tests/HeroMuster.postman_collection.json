@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "2be0201a-cfa2-43e0-95c2-5535e8dad63e",
+		"name": "HeroMuster",
+		"description": "https://documenter.getpostman.com/view/2899728/heromuster-open-legend-api/7187afM?_ga=2.185710895.763695680.1534878107-1987030645.1534878107\n\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Character Builder",
+			"item": [
+				{
+					"name": "Character by Character ID ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b86ade0b-71e3-4263-8f1c-15347732920d",
+								"type": "text/javascript",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = Object.keys(data.meta).length",
+									"var b = Object.keys(data.success.character).length",
+									"console.log(a)",
+									"console.log(b)",
+									"console.log(data)"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api/character/{{characterid}}",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"character",
+								"{{characterid}}"
+							]
+						},
+						"description": "https://openlegend.heromuster.com/api/character/{{characterid}}\r\n\r\nReturn a specific character by its unique {{characterid}}. This is represented after character?s={{characterid}} when viewing through the website.\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Characters by Player ID ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": ""
+						},
+						"description": "https://openlegend.heromuster.com/api/player/{{playerid}}\r\n\r\nView all characters created by a specific player, determined by the Player Name field in the Character Builder. The Player Name is automatically converted into the {{playerid}}. This is represented after player?p={{playerid}} when viewing through the website.\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Recent Characters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": ""
+						},
+						"description": "https://openlegend.heromuster.com/api/all\r\n\r\nReturn the most recent 50 character sheets created using the Character Builder.\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Recent Characters (Pagination) ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": ""
+						},
+						"description": "https://openlegend.heromuster.com/api/all/{{startnumber}}\r\n\r\nView recent characters created using the Character Builder, but specify the numeric starting position.\r\nReturns 50 results per request.\r\n"
+					},
+					"response": []
+				}
+			],
+			"description": "https://openlegend.heromuster.com/character?s=dc7053a16984\n",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "aa96a2e6-1824-4288-92bf-b0328ee3041e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "30b96895-ea3a-44d7-9221-cfa4e46d6106",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "NPC Generator",
+			"item": []
+		},
+		{
+			"name": "Extraordinary Item Builder",
+			"item": []
+		},
+		{
+			"name": "Core Rules",
+			"item": []
+		}
+	]
+}
