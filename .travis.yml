@@ -11,4 +11,4 @@ before_script:
   - node_modules/.bin/newman --version
 
 script:
-  - node_modules/.bin/newman run tests/Allmyles.postman_collection.json -e Allmyles.postman_environment.json
+  - node_modules/.bin/newman run tests/HeroMuster.postman_collection.json -e HeroMuster.postman_environment.json
