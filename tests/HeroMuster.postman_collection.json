@@ -15,7 +15,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b86ade0b-71e3-4263-8f1c-15347732920d",
+								"id": "f44f829c-5d8e-446a-aea7-2fd7b22bcde3",
 								"type": "text/javascript",
 								"exec": [
 									"pass = true;",
@@ -24,9 +24,41 @@
 									"var data = JSON.parse(responseBody);",
 									"var a = Object.keys(data.meta).length",
 									"var b = Object.keys(data.success.character).length",
-									"console.log(a)",
-									"console.log(b)",
-									"console.log(data)"
+									"var c = data.success.characterid",
+									"var d = environment.characterid",
+									"var e = data.success.character.playername",
+									"//console.log(e)",
+									"//console.log(data)",
+									"",
+									"if (a === 3) {",
+									"    tests[\"Number of meta objects = \" + a] = pass;",
+									"}",
+									"else ",
+									"    tests[\"Number of meta objects = \" + a] = fail;",
+									"    ",
+									"if (b === 123) {",
+									"    tests[\"Number of character objects = \" + b ] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of character objects = \" + b ] = fail;",
+									"",
+									"if (c === d) {",
+									"    tests[\"Character ID = \" + d] = pass;",
+									"}",
+									"else",
+									"    tests[\"Character ID = \" + d] = fail;",
+									"",
+									"if (environment.playerid === e) {",
+									"    tests[\"PlayerName Matches PlayerID\"] = pass;",
+									"}",
+									"else if (environment.playerid != e) {",
+									"    pm.environment.set(\"playerid\", e);",
+									"    tests[\"PlayerName != PlayerID - Updated it\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"PlayerName Matches PlayerID\"] = fail;",
+									"",
+									""
 								]
 							}
 						}
@@ -60,7 +92,18 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": ""
+							"raw": "https://openlegend.heromuster.com/api/player/{{playerid}}",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"player",
+								"{{playerid}}"
+							]
 						},
 						"description": "https://openlegend.heromuster.com/api/player/{{playerid}}\r\n\r\nView all characters created by a specific player, determined by the Player Name field in the Character Builder. The Player Name is automatically converted into the {{playerid}}. This is represented after player?p={{playerid}} when viewing through the website.\r\n"
 					},
@@ -73,7 +116,17 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": ""
+							"raw": "https://openlegend.heromuster.com/api/all",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"all"
+							]
 						},
 						"description": "https://openlegend.heromuster.com/api/all\r\n\r\nReturn the most recent 50 character sheets created using the Character Builder.\r\n"
 					},
@@ -86,7 +139,18 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": ""
+							"raw": "https://openlegend.heromuster.com/api/all/{{startnumber}}",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"all",
+								"{{startnumber}}"
+							]
 						},
 						"description": "https://openlegend.heromuster.com/api/all/{{startnumber}}\r\n\r\nView recent characters created using the Character Builder, but specify the numeric starting position.\r\nReturns 50 results per request.\r\n"
 					},
