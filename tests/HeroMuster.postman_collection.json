@@ -87,6 +87,31 @@
 				},
 				{
 					"name": "Characters by Player ID ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "66a625a5-71f5-411f-a7e6-69c290e475a0",
+								"type": "text/javascript",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = Object.keys(data.success.characters)",
+									"var b = (a.includes(environment.characterid))",
+									"//console.log(data);",
+									"",
+									"if (b) {",
+									"    tests[\"Character ID included\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Character ID included\"] = fail;",
+									""
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -111,6 +136,21 @@
 				},
 				{
 					"name": "Recent Characters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "41320db6-3b17-4c4f-b890-a21c8cee30eb",
+								"type": "text/javascript",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -134,6 +174,21 @@
 				},
 				{
 					"name": "Recent Characters (Pagination) ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "22c747ea-e34f-48f7-b883-ef6126e883de",
+								"type": "text/javascript",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);"
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
