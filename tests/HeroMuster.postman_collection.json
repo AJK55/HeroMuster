@@ -91,22 +91,35 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "66a625a5-71f5-411f-a7e6-69c290e475a0",
+								"id": "1a794dda-fd4a-44e3-9a23-ebc6dcd4540f",
 								"type": "text/javascript",
 								"exec": [
 									"pass = true;",
 									"fail = false;",
 									"",
 									"var data = JSON.parse(responseBody);",
-									"var a = Object.keys(data.success.characters)",
-									"var b = (a.includes(environment.characterid))",
-									"//console.log(data);",
+									"var a = Object.keys(data.success.characters);",
+									"var b = (a.includes(environment.characterid));",
+									"var c = data.success.total",
+									"var d = a.length //7",
+									"//console.log(data)",
+									"",
 									"",
 									"if (b) {",
 									"    tests[\"Character ID included\"] = pass;",
 									"}",
 									"else",
 									"    tests[\"Character ID included\"] = fail;",
+									"",
+									"",
+									"if (d === c) {",
+									"    tests[\"Number of characters returned equals total\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of characters returned equals total\"] = fail;",
+									"",
+									"",
+									"",
 									""
 								]
 							}
@@ -140,13 +153,32 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "41320db6-3b17-4c4f-b890-a21c8cee30eb",
+								"id": "ae9da3d2-84e6-4174-8490-de9384f8a795",
 								"type": "text/javascript",
 								"exec": [
 									"pass = true;",
 									"fail = false;",
 									"",
-									"var data = JSON.parse(responseBody);"
+									"var data = JSON.parse(responseBody);",
+									"var a = data.success.total;",
+									"var b = data.success.characters;",
+									"var c = Object.keys(b).length;",
+									"var d = Object.keys(b);",
+									"var e = environment.characterid;",
+									"var f = d.includes(e);",
+									"//console.log(data)",
+									"",
+									"if (a === c) {",
+									"    tests[\"Number of characters returned equals total number\"] = pass;",
+									"}",
+									"else ",
+									"    tests[\"Number of characters returned equals total number\"] = fail;",
+									"",
+									"if (f === false) {",
+									"    tests[\"Not included in returned characters - \" + e] = pass;",
+									"}",
+									"else ",
+									"    tests[\"Not included in returned characters - \" + e] = fail;"
 								]
 							}
 						}
