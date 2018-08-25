@@ -15,7 +15,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f44f829c-5d8e-446a-aea7-2fd7b22bcde3",
+								"id": "2776ef95-5695-4ee9-b4c7-97baf0d7a844",
 								"type": "text/javascript",
 								"exec": [
 									"pass = true;",
@@ -27,6 +27,13 @@
 									"var c = data.success.characterid",
 									"var d = environment.characterid",
 									"var e = data.success.character.playername",
+									"var f = data.meta.status",
+									"",
+									"if (f === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
 									"//console.log(e)",
 									"//console.log(data)",
 									"",
@@ -91,7 +98,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1a794dda-fd4a-44e3-9a23-ebc6dcd4540f",
+								"id": "aed99b37-c8eb-4dd4-b879-cce9a0d78d97",
 								"type": "text/javascript",
 								"exec": [
 									"pass = true;",
@@ -102,7 +109,14 @@
 									"var b = (a.includes(environment.characterid));",
 									"var c = data.success.total",
 									"var d = a.length //7",
+									"var e = data.meta.status",
 									"//console.log(data)",
+									"",
+									"if (e === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
 									"",
 									"",
 									"if (b) {",
@@ -153,7 +167,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ae9da3d2-84e6-4174-8490-de9384f8a795",
+								"id": "1b7f0719-f5a6-4f99-8b2f-5aec89b9feed",
 								"type": "text/javascript",
 								"exec": [
 									"pass = true;",
@@ -166,7 +180,15 @@
 									"var d = Object.keys(b);",
 									"var e = environment.characterid;",
 									"var f = d.includes(e);",
+									"var g = data.meta.status",
 									"//console.log(data)",
+									"",
+									"if (g === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
 									"",
 									"if (a === c) {",
 									"    tests[\"Number of characters returned equals total number\"] = pass;",
@@ -210,13 +232,40 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "22c747ea-e34f-48f7-b883-ef6126e883de",
+								"id": "6806ef02-06f9-4227-b89d-3707758ec895",
 								"type": "text/javascript",
 								"exec": [
 									"pass = true;",
 									"fail = false;",
 									"",
-									"var data = JSON.parse(responseBody);"
+									"var data = JSON.parse(responseBody);",
+									"var a = data.success.total;",
+									"var b = data.success.characters;",
+									"var c = Object.keys(b).length;",
+									"var d = Object.keys(b);",
+									"var e = environment.characterid;",
+									"var f = d.includes(e);",
+									"var g = data.meta.status",
+									"//console.log(data)",
+									"",
+									"if (g === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
+									"",
+									"if (a === c) {",
+									"    tests[\"Number of characters returned equals total number\"] = pass;",
+									"}",
+									"else ",
+									"    tests[\"Number of characters returned equals total number\"] = fail;",
+									"",
+									"if (f === false) {",
+									"    tests[\"Not included in returned characters - \" + e] = pass;",
+									"}",
+									"else ",
+									"    tests[\"Not included in returned characters - \" + e] = fail;"
 								]
 							}
 						}
@@ -262,9 +311,7 @@
 						"id": "30b96895-ea3a-44d7-9221-cfa4e46d6106",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
+							""
 						]
 					}
 				}
@@ -272,7 +319,145 @@
 		},
 		{
 			"name": "NPC Generator",
-			"item": []
+			"item": [
+				{
+					"name": "Random NPC ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bc55ec29-e8bd-490a-bc1c-ce40b700c10c",
+								"type": "text/javascript",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = data.meta.status",
+									"var b = data.success",
+									"var c = Object.keys(b)",
+									"//console.log(data)",
+									"//console.log(c)",
+									"",
+									"if (a === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
+									"if (c.length === 16) {",
+									"    tests[\"Number of success objects = \" + c.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of success objects = \" + c.length] = fail;",
+									" ",
+									" "
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api/npc",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"npc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Random NPC at a Specific Level ",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6c1dc110-b841-4e44-a05e-e19b4d70f986",
+								"type": "text/javascript",
+								"exec": [
+									"/**",
+									" * Returns a random integer between min (inclusive) and max (inclusive)",
+									" * Using Math.round() will give you a non-uniform distribution!",
+									" */",
+									"function getRandomInt(min, max) {",
+									"    return Math.floor(Math.random() * (max - min + 1)) + min;",
+									"}",
+									"",
+									"var a = getRandomInt(1, 20);",
+									"",
+									"pm.environment.set(\"level\", a);",
+									"",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51231c42-4116-479e-9d15-40d086a0b0e6",
+								"type": "text/javascript",
+								"exec": [
+									"console.log(environment.level);",
+									"",
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = data.meta.status",
+									"var b = data.success",
+									"var c = Object.keys(b)",
+									"console.log(data)",
+									"console.log(c.length)",
+									"",
+									"if (a === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"    ",
+									"if (c.length === 16) {",
+									"    tests[\"Number of success objects = \" + c.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of success objects = \" + c.length] = fail;",
+									" "
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api//npc/{{level}}",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"",
+								"npc",
+								"{{level}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Extraordinary Item Builder",
@@ -281,6 +466,30 @@
 		{
 			"name": "Core Rules",
 			"item": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "36f78388-8bd7-474c-8013-cc14b9375629",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "81fc9749-b557-4fc5-bfdf-c12b714ddec1",
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
 		}
 	]
 }
