@@ -633,7 +633,647 @@
 		},
 		{
 			"name": "Core Rules",
-			"item": []
+			"item": [
+				{
+					"name": "Feats",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1a86995a-4d4d-4c40-9d15-c480e43624a1",
+								"type": "text/javascript",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = data.meta.status",
+									"var b = data.success",
+									"",
+									"",
+									"",
+									"",
+									"if (a === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
+									"if (b.length === 78) {",
+									"    tests[\"Number returned = \" + b.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number returned = \" + b.length] = fail;",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api/feats",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"feats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtered Feats ",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1a773f81-f2be-45cd-812c-c397e01e8d77",
+								"type": "text/javascript",
+								"exec": [
+									"function getRandomInt(min, max) {",
+									"    return Math.floor(Math.random() * (max - min + 1)) + min;",
+									"}",
+									"",
+									"var a = ",
+									"  getRandomInt(0, 9).toString() ",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString();",
+									"",
+									"pm.environment.set(\"attributes\", a);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "244ba0f7-a7d1-400b-b64a-a297632c2c0d",
+								"type": "text/javascript",
+								"exec": [
+									"console.log(environment.attributes);",
+									"",
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = data.meta.status",
+									"var b = data.meta.query",
+									"var c = b.replace(\"/api/feats/\", \"\")",
+									"var d = environment.attributes",
+									"//console.log(c)",
+									"",
+									"if (a === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
+									"if (c === d) {",
+									"    tests[\"Attributes matches query\"] = pass;",
+									"}",
+									"else",
+									"    test[\"Attributes matches query\"] = fail;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api/feats/{{attributes}}",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"feats",
+								"{{attributes}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Boons",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0dcac3ce-bb71-454a-bbe6-bb9dceed98e1",
+								"type": "text/javascript",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = data.meta.status",
+									"var b = data.success.attributes",
+									"var c = Object.keys(b)",
+									"var d = data.success.boons",
+									"var e = Object.keys(d)",
+									"//console.log(data)",
+									"//console.log(e.length)",
+									"",
+									"if (a === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
+									"if (c.length === 18) {",
+									"    tests[\"Number of Attributes returned = \" + c.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of Attributes returned = \" + c.length] = fail;",
+									"",
+									"if (e.length === 31) {",
+									"    tests[\"Number of Boons returns = \"+ e.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of Boons returns = \"+ e.length] = fail;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api/boons",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"boons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtered Boons ",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ff597f3d-6993-47d9-9b50-6600099fee36",
+								"type": "text/javascript",
+								"exec": [
+									"function getRandomInt(min, max) {",
+									"    return Math.floor(Math.random() * (max - min + 1)) + min;",
+									"}",
+									"",
+									"var a = ",
+									"  getRandomInt(0, 9).toString() ",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString();",
+									"",
+									"pm.environment.set(\"attributes\", a);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "72ed10aa-dbcd-42ee-9fdd-57a3bf4b35de",
+								"type": "text/javascript",
+								"exec": [
+									"console.log(environment.attributes);",
+									"",
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = data.meta.status",
+									"var b = data.meta.query",
+									"var c = b.replace(\"/api/boons/\", \"\")",
+									"var d = environment.attributes",
+									"var e = data.success.attributes",
+									"var f = Object.keys(e)",
+									"//console.log(data)",
+									"",
+									"",
+									"if (a === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
+									"if (c === d) {",
+									"    tests[\"Attributes Match Query\"] = pass;",
+									"}",
+									"else ",
+									"    tests[\"Attributes Match Query\"] = fail;",
+									"",
+									"if (f.length === 18) {",
+									"    tests[\"Number of Attributes returned = \" + f.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of Attributes returned = \" + f.length] = fail;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api/boons/{{attributes}}",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"boons",
+								"{{attributes}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Banes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7ffcb52-f597-4116-a2c3-bbe172f64757",
+								"type": "text/javascript",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = data.meta.status",
+									"var b = data.success",
+									"var c = b.value",
+									"var d = Object.keys(b.attributes)",
+									"var e = Object.keys(b.banes)",
+									"//console.log(data)",
+									"//console.log(e.length)",
+									"",
+									"if (a === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
+									"if (c === 1000000000000000000) {",
+									"    tests[\"Value = \" + c] = pass;",
+									"}",
+									"else ",
+									"    tests[\"Value = \" + c] = fail;",
+									"",
+									"if (d.length === 18) {",
+									"    tests[\"Number of Attribute = \" + d.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of Attribute = \" + d.length] = fail;",
+									"",
+									"if (e.length === 27) {",
+									"    tests[\"Number of Attribute = \" + e.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of Attribute = \" + e.length] = fail;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api/banes",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"banes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtered Banes",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "89b74dee-6acf-41bb-b4e4-7cda4b4609da",
+								"type": "text/javascript",
+								"exec": [
+									"function getRandomInt(min, max) {",
+									"    return Math.floor(Math.random() * (max - min + 1)) + min;",
+									"}",
+									"",
+									"var a = ",
+									"  getRandomInt(0, 9).toString() ",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString()",
+									"+ getRandomInt(0, 9).toString();",
+									"",
+									"pm.environment.set(\"attributes\", a);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2e4f8ccd-9619-46a9-8b4d-d529e7d8ccf4",
+								"type": "text/javascript",
+								"exec": [
+									"console.log(environment.attributes);",
+									"",
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = data.meta.status",
+									"var b = data.meta.query",
+									"var c = b.replace(\"/api/banes/\", \"\")",
+									"var d = environment.attributes",
+									"var e = data.success.attributes",
+									"var f = Object.keys(e)",
+									"",
+									"",
+									"if (a === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
+									"if (c === d) {",
+									"    tests[\"Attributes Match = \" + d] = pass;",
+									"}",
+									"else",
+									"    tests[\"Attributes Match = \" + d] = fail;",
+									"",
+									"if (f.length === 18) {",
+									"    tests[\"Number of Attribute = \" + f.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of Attribute = \" + f.length] = fail;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api/banes/{{attributes}}",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"banes",
+								"{{attributes}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Perks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "50ac00bc-b144-4b4f-81b4-495d2569e495",
+								"type": "text/javascript",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = data.meta.status",
+									"var b = data.success",
+									"var c = Object.keys(b)",
+									"//console.log(data)",
+									"",
+									"",
+									"if (a === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
+									"if (c.length === 35) {",
+									"    tests[\"Number of Perks Returned = \" + c.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of Perks Returned = \" + c.length] = fail;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api/perks",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"perks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Flaws",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f68e1c7-51c5-4637-9e36-f296468a2b30",
+								"type": "text/javascript",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = data.meta.status",
+									"var b = data.success",
+									"var c = Object.keys(b)",
+									"//console.log(c.length)",
+									"",
+									"",
+									"if (a === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
+									"if (c.length === 31) {",
+									"    tests[\"Number of Flaws Returned = \" + c.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of Flaws Returned = \" + c.length] = fail;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api/flaws",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"flaws"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Core Weapons ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9574a6cb-c6dd-4c69-b462-f043e6ec25e2",
+								"type": "text/javascript",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var a = data.meta.status",
+									"var b = data.success",
+									"var c = Object.keys(b)",
+									"//console.log(c.length)",
+									"",
+									"if (a === \"success\") {",
+									"    tests[\"Successful Run\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Successful Run\"] = fail;",
+									"",
+									"if (c.length === 56) {",
+									"    tests[\"Number of weapons returned = \" + c.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of weapons returned = \" + c.length] = fail;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "https://openlegend.heromuster.com/api/weapons",
+							"protocol": "https",
+							"host": [
+								"openlegend",
+								"heromuster",
+								"com"
+							],
+							"path": [
+								"api",
+								"weapons"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
