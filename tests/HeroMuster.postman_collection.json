@@ -98,7 +98,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "27efab6d-8f61-4633-a447-42e1072cd84a",
+								"id": "08be952c-3418-4053-b01d-e2070e04c88e",
 								"type": "text/javascript",
 								"exec": [
 									"pass = true;",
@@ -113,10 +113,13 @@
 									"var f = environment.characterid",
 									"var g = data.success.characters[f.toString()];",
 									"var h = g.characterid",
+									"var i = data.success.characters[f.toString()].character",
+									"var j = Object.keys(i)",
 									"//console.log(data)",
-									"console.log(f)",
+									"//console.log(f)",
 									"//console.log(g)",
-									"console.log(h)",
+									"//console.log(j)",
+									"//console.log(Object.keys(i).length)",
 									"",
 									"if (e === \"success\") {",
 									"    tests[\"Successful Run\"] = pass;",
@@ -139,12 +142,16 @@
 									"    tests[\"Number of characters returned equals total\"] = fail;",
 									"",
 									"if (f === h) {",
-									"    tests[\"Correctly passing characterID = \" + h] = pass;",
+									"    tests[\"Environment.CharacterID passed correctly = \" + h] = pass;",
 									"}",
 									"else",
-									"    tests[\"Correctly passing characterID = \" + h] = fail;",
+									"    tests[\"Environment.CharacterID passed correctly = \" + h] = fail;",
 									"",
-									"",
+									"if (j.length === 123) {",
+									"    tests[\"Number of objects returned for 813c772eb675 is correct = \" + j.length] = pass;",
+									"}",
+									"else",
+									"    tests[\"Number of objects returned for 813c772eb675 is correct = \" + j.length] = fail;",
 									"",
 									""
 								]
@@ -179,7 +186,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c3c2f2bc-257f-48cc-82a7-9907dc80e1ef",
+								"id": "a8e3755b-65e8-4fc1-9951-bf38b796b14c",
 								"type": "text/javascript",
 								"exec": [
 									"pass = true;",
@@ -244,9 +251,11 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6806ef02-06f9-4227-b89d-3707758ec895",
+								"id": "b2827d66-b02b-4224-b36a-3f4b9164cd96",
 								"type": "text/javascript",
 								"exec": [
+									"console.log(environment.startnumberA)",
+									"",
 									"pass = true;",
 									"fail = false;",
 									"",
@@ -258,7 +267,15 @@
 									"var e = environment.characterid;",
 									"var f = d.includes(e);",
 									"var g = data.meta.status",
-									"//console.log(data)",
+									"var h = data.meta.query.replace(\"/api/all/\", \"\")",
+									"var i = environment.startnumberA",
+									"",
+									"",
+									"if (h == i) {",
+									"    tests[\"StartNumberA in query matches environment\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"StartNumberA in query matches environment\"] = fail;",
 									"",
 									"if (g === \"success\") {",
 									"    tests[\"Successful Run\"] = pass;",
@@ -280,6 +297,27 @@
 									"    tests[\"Not included in returned characters - \" + e] = fail;"
 								]
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6b1a4189-688b-4b4c-b415-d7a69347f6d9",
+								"type": "text/javascript",
+								"exec": [
+									"/**",
+									" * Returns a random integer between min (inclusive) and max (inclusive)",
+									" * Using Math.round() will give you a non-uniform distribution!",
+									" */",
+									"function getRandomInt(min, max) {",
+									"    return Math.floor(Math.random() * (max - min + 1)) + min;",
+									"}",
+									"",
+									"///max is 2153",
+									"var a = getRandomInt(1, 31500);",
+									"",
+									"pm.environment.set(\"startnumberA\", a);"
+								]
+							}
 						}
 					],
 					"request": {
@@ -287,7 +325,7 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "https://openlegend.heromuster.com/api/all/{{startnumber}}",
+							"raw": "https://openlegend.heromuster.com/api/all/{{startnumberA}}",
 							"protocol": "https",
 							"host": [
 								"openlegend",
@@ -297,7 +335,7 @@
 							"path": [
 								"api",
 								"all",
-								"{{startnumber}}"
+								"{{startnumberA}}"
 							]
 						},
 						"description": "https://openlegend.heromuster.com/api/all/{{startnumber}}\r\n\r\nView recent characters created using the Character Builder, but specify the numeric starting position.\r\nReturns 50 results per request.\r\n"
@@ -338,7 +376,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bc55ec29-e8bd-490a-bc1c-ce40b700c10c",
+								"id": "c7876425-25e7-43f3-a9af-14debc89064d",
 								"type": "text/javascript",
 								"exec": [
 									"pass = true;",
@@ -416,7 +454,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f29bd96c-2308-4493-8ce4-279c159f30cd",
+								"id": "c323c4d1-5327-4559-aeb3-97312ef4ffff",
 								"type": "text/javascript",
 								"exec": [
 									"console.log(environment.level);",
@@ -428,7 +466,9 @@
 									"var a = data.meta.status",
 									"var b = data.success",
 									"var c = Object.keys(b)",
-									"//console.log(data)",
+									"var d = data.meta.query.replace(\"/api//npc/\", \"\")",
+									"var e = environment.level",
+									"//console.log(d)",
 									"//console.log(c.length)",
 									"",
 									"if (a === \"success\") {",
@@ -442,7 +482,12 @@
 									"}",
 									"else",
 									"    tests[\"Number of success objects = \" + c.length] = fail;",
-									" "
+									"",
+									"if (d == e) {",
+									"    tests[\"Quesry matches level\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Quesry matches level\"] = fail;"
 								]
 							}
 						}
@@ -579,7 +624,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f785ea7d-a488-4715-94ba-d3adbc2b0f46",
+								"id": "0691c1a9-1c0f-4491-b9c1-510e84e08cef",
 								"type": "text/javascript",
 								"exec": [
 									"console.log(environment.startnumber);",
@@ -594,8 +639,16 @@
 									"var c = Object.keys(b)",
 									"var d = data.success.total",
 									"var e = data.success.start",
+									"var f = environment.startnumber",
+									"var g = data.meta.query.replace(\"/api/allitem/\",\"\")",
 									"//console.log(data)",
-									"//console.log(e)",
+									"//console.log(g)",
+									"",
+									"if (f == g) {",
+									"    tests[\"Query matches startnumber\"] = pass;",
+									"}",
+									"else",
+									"    tests[\"Query matches startnumber\"] = fail;",
 									"",
 									"if (a === \"success\") {",
 									"    tests[\"Successful Run\"] = pass;",
